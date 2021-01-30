@@ -52,6 +52,41 @@ Docker Compose installation options.
 
 A list of system users to be added to the `docker` group (so they can use Docker on the server).
 
+    # docker client configuration --------------------------------------------------
+    ## enable authentication for docker registry
+    docker_client_config_enabled: false
+    ## the location we should push client configuration
+    docker_client_config_location: "/root/.docker/config.json"
+    # for auth (docker login) use something like:
+    #docker_client_config:
+    #  auths:
+    #    "https://test.tld:1234":
+    #      auth: "SOME_STRING"
+    #      email: "SOME_EMAIL"
+    
+    # default dockerd configuration options ----------------------------------------
+    ## https://docs.docker.com/engine/reference/commandline/dockerd/#/linux-configuration-file
+    docker_config_graph: "/var/lib/docker"
+    docker_config_log_driver: ""
+    docker_config_log_opts: {}
+    docker_config_max_concurrent_downloads: 3
+    docker_config_max_concurrent_uploads: 5
+    docker_config_debug: false
+    docker_config_log_level: ""
+    docker_config_bridge: ~
+    docker_config_bip: "172.16.0.1/24"
+    docker_config_fixed_cidr: "172.16.0.0/24"
+    docker_config_fixed_cidr_v6: ""
+    docker_config_default_gateway: ""
+    docker_config_default_gateway_v6: ""
+    docker_config_selinux_enabled: false
+    docker_config_ip: "0.0.0.0"
+    docker_config_group: "{{ docker_group }}"
+    docker_config_insecure_registries: []
+    
+    # additional custom docker settings can be added to this dict:
+    docker_config_custom: {}
+
 ## Use with Ansible (and `docker` Python library)
 
 Many users of this role wish to also use Ansible to then _build_ Docker images and manage Docker containers on the server where Docker is installed. In this case, you can easily add in the `docker` Python library using the `geerlingguy.pip` role:

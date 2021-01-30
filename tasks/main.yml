@@ -11,6 +11,8 @@
     state: "{{ docker_package_state }}"
   notify: restart docker
 
+- include_tasks: config.yml
+  
 - name: Ensure Docker is started and enabled at boot.
   service:
     name: docker

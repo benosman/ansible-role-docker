@@ -1,0 +1,36 @@
+---
+
+# create docker config directoy
+- name: create docker config directory
+  file:
+    path: /etc/docker
+    state: directory
+    mode: 0755
+    owner: root
+    group: root
+
+# configure docker daemon json file
+- name: configure docker daemon.json
+  template:
+    src: daemon.json.j2
+    dest: /etc/docker/daemon.json
+    mode: 0400
+    owner: root
+    group: root
+  notify: restart docker
+  when: docker_config_enabled == true
+
+# push client config if enabled
+- name: create docker client config directory
+  file:
+    state: directory
+    path: "{{ docker_client_config_location | dirname }}"
+    mode: 0750
+  when: docker_client_config_enabled == true
+
+- name: configure docker client config.json
+  template:
+    src: "config.json.j2"
+    dest: "{{ docker_client_config_location }}"
+    mode: 0440
+  when: docker_client_config_enabled == true
