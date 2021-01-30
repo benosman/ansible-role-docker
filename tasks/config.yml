@@ -9,6 +9,9 @@
     owner: root
     group: root
 
+- set_fact:
+    docker_config: '{{ docker_config_common | combine(docker_config_custom) | dict2items | rejectattr("value", "equalto", "") | list | items2dict }}'
+
 # configure docker daemon json file
 - name: configure docker daemon.json
   template:
