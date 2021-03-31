@@ -12,6 +12,11 @@
   notify: restart docker
 
 - include_tasks: config.yml
+
+- import_tasks: docker-service.yml
+  when: 
+    - ansible_service_mgr == 'systemd' 
+    - docker_http_proxy != "" or docker_https_proxy != "" or docker_no_proxy != ""
   
 - name: Ensure Docker is started and enabled at boot.
   service:
