@@ -36,5 +36,6 @@
 - name: Add Docker repository.
   apt_repository:
     repo: "{{ docker_apt_repository }}"
+    filename: "{{ docker_apt_repository_filename }}"
     state: present
     update_cache: true
